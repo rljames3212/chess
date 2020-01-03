@@ -9,18 +9,18 @@ func isValidLocation(l location.Location) bool {
 		l.GetCol() >= 0 && l.GetCol() < BOARD_SIZE
 }
 
-func isLocationOccupied(loc location.Location, pcs []*Piece) bool {
+func isLocationOccupied(loc location.Location, pcs []Piece) bool {
 	for _, p := range pcs {
-		if loc.Equals((*p).GetLocation()) {
+		if loc.Equals(p.GetLocation()) {
 			return true
 		}
 	}
 	return false
 }
 
-func isLocationOccupiedByOpponent(loc location.Location, thisColor PieceColor, pcs []*Piece) bool {
+func isLocationOccupiedByOpponent(loc location.Location, thisColor PieceColor, pcs []Piece) bool {
 	for _, p := range pcs {
-		if (*p).GetColor() != thisColor && loc.Equals((*p).GetLocation()) {
+		if p.GetColor() != thisColor && loc.Equals(p.GetLocation()) {
 			return true
 		}
 	}
@@ -47,5 +47,6 @@ type Piece interface {
 	GetColor() PieceColor
 	GetLocation() location.Location
 	GetHasMoved() bool
-	GetValidMoves([]*Piece) []location.Location
+	GetValidMoves([]Piece) []location.Location
+	Move(location.Location)
 }
