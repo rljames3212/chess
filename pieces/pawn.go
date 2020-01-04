@@ -23,23 +23,23 @@ func NewPawn(l location.Location, pc PieceColor) *Pawn {
 	}
 }
 
-// GetColor returns the color of the pawn
-func (p *Pawn) GetColor() PieceColor {
+// Color returns the color of the pawn
+func (p *Pawn) Color() PieceColor {
 	return p.color
 }
 
-// GetHasMoved returns whether or not the piece has moved
-func (p *Pawn) GetHasMoved() bool {
+// HasMoved returns whether or not the piece has moved
+func (p *Pawn) HasMoved() bool {
 	return p.hasMoved
 }
 
-// GetLocation returns the location of the pawn on the board
-func (p *Pawn) GetLocation() location.Location {
+// Location returns the location of the pawn on the board
+func (p *Pawn) Location() location.Location {
 	return p.loc
 }
 
-// GetValidMoves returns a slice of all moves the pawn can make given a piece configuration
-func (p *Pawn) GetValidMoves(pcs []Piece) []location.Location {
+// ValidMoves returns a slice of all moves the pawn can make given a piece configuration
+func (p *Pawn) ValidMoves(pcs []Piece) []location.Location {
 	currentRow := p.loc.GetRow()
 	currentCol := p.loc.GetCol()
 
@@ -56,12 +56,12 @@ func (p *Pawn) GetValidMoves(pcs []Piece) []location.Location {
 	// check locations diagonally in front of pawn to see if a capture can be made
 	// check first diagonal
 	loc = location.Location{Row: currentRow + movementDirection, Col: currentCol + 1}
-	if isValidLocation(loc) && isLocationOccupiedByOpponent(loc, p.GetColor(), pcs) {
+	if isValidLocation(loc) && isLocationOccupiedByOpponent(loc, p.Color(), pcs) {
 		validMoves = append(validMoves, loc)
 	}
 	// check second diagonal
 	loc = location.Location{Row: currentRow + movementDirection, Col: currentCol - 1}
-	if isValidLocation(loc) && isLocationOccupiedByOpponent(loc, p.GetColor(), pcs) {
+	if isValidLocation(loc) && isLocationOccupiedByOpponent(loc, p.Color(), pcs) {
 		validMoves = append(validMoves, loc)
 	}
 	// check location directly in front of pawn

@@ -11,7 +11,7 @@ func TestUnmovedUnblockedBlackPawn(t *testing.T) {
 
 	var pcs []Piece
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 	expectedMoves := []location.Location{
 		{Row: 6, Col: 1},
 		{Row: 5, Col: 1},
@@ -26,7 +26,7 @@ func TestUnmovedUnblockedWhitePawn(t *testing.T) {
 
 	var pcs []Piece
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 	expectedMoves := []location.Location{
 		{Row: 2, Col: 1},
 		{Row: 3, Col: 1},
@@ -41,7 +41,7 @@ func TestUnmovedBlockedBlackPawn(t *testing.T) {
 	p1 := NewPawn(location.Location{Row: 5, Col: 2}, WHITE)
 	pcs := []Piece{p1}
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 	var expectedMoves []location.Location
 
 	evaluate(validMoves, expectedMoves, t)
@@ -53,7 +53,7 @@ func TestUnmovedBlockedWhitePawn(t *testing.T) {
 	p1 := NewPawn(location.Location{Row: 2, Col: 2}, WHITE)
 	pcs := []Piece{p1}
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 	var expectedMoves []location.Location
 
 	evaluate(validMoves, expectedMoves, t)
@@ -64,7 +64,7 @@ func TestMovedUnblockedBlackPawn(t *testing.T) {
 	p.Move(location.Location{Row: 5, Col: 0})
 
 	var pcs []Piece
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 
 	expectedmoves := []location.Location{
 		{Row: 4, Col: 0},
@@ -78,7 +78,7 @@ func TestMovedUnblockedWhitePawn(t *testing.T) {
 	p.Move(location.Location{Row: 2, Col: 0})
 
 	var pcs []Piece
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 
 	expectedmoves := []location.Location{
 		{Row: 3, Col: 0},
@@ -95,7 +95,7 @@ func TestMovedBlockedBlackPawn(t *testing.T) {
 		NewPawn(location.Location{Row: 5, Col: 0}, BLACK),
 	}
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 
 	var expectedMoves []location.Location
 
@@ -110,7 +110,7 @@ func TestMovedBlockedWhitePawn(t *testing.T) {
 		NewPawn(location.Location{Row: 3, Col: 0}, BLACK),
 	}
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 
 	var expectedMoves []location.Location
 
@@ -127,7 +127,7 @@ func TestCaptureBlackPawn(t *testing.T) {
 		NewPawn(location.Location{Row: 7, Col: 2}, WHITE),
 	}
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 
 	expectedMoves := []location.Location{
 		{Row: 5, Col: 2},
@@ -147,12 +147,34 @@ func TestCaptureWhitePawn(t *testing.T) {
 		NewPawn(location.Location{Row: 7, Col: 2}, WHITE),
 	}
 
-	validMoves := p.GetValidMoves(pcs)
+	validMoves := p.ValidMoves(pcs)
 
 	expectedMoves := []location.Location{
 		{Row: 2, Col: 0},
 		{Row: 2, Col: 1},
 		{Row: 3, Col: 1},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
+
+func TestKnight(t *testing.T) {
+	k := NewKnight(location.Location{Row: 2, Col: 6}, WHITE)
+
+	pcs := []Piece{
+		NewPawn(location.Location{Row: 2, Col: 5}, WHITE),
+		NewPawn(location.Location{Row: 1, Col: 4}, BLACK),
+		NewPawn(location.Location{Row: 3, Col: 4}, WHITE),
+	}
+
+	validMoves := k.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 0, Col: 7},
+		{Row: 4, Col: 7},
+		{Row: 0, Col: 5},
+		{Row: 4, Col: 5},
+		{Row: 1, Col: 4},
 	}
 
 	evaluate(validMoves, expectedMoves, t)

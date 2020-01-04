@@ -11,7 +11,7 @@ func isValidLocation(l location.Location) bool {
 
 func isLocationOccupied(loc location.Location, pcs []Piece) bool {
 	for _, p := range pcs {
-		if loc.Equals(p.GetLocation()) {
+		if loc.Equals(p.Location()) {
 			return true
 		}
 	}
@@ -20,7 +20,7 @@ func isLocationOccupied(loc location.Location, pcs []Piece) bool {
 
 func isLocationOccupiedByOpponent(loc location.Location, thisColor PieceColor, pcs []Piece) bool {
 	for _, p := range pcs {
-		if p.GetColor() != thisColor && loc.Equals(p.GetLocation()) {
+		if p.Color() != thisColor && loc.Equals(p.Location()) {
 			return true
 		}
 	}
@@ -44,9 +44,14 @@ func (pc PieceColor) String() string {
 
 // Piece represents a chess piece
 type Piece interface {
-	GetColor() PieceColor
-	GetLocation() location.Location
-	GetHasMoved() bool
-	GetValidMoves([]Piece) []location.Location
+	Color() PieceColor
+	Location() location.Location
+	HasMoved() bool
+	ValidMoves([]Piece) []location.Location
 	Move(location.Location)
+}
+
+type bearing struct {
+	Row int
+	Col int
 }
