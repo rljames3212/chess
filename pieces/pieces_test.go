@@ -180,6 +180,30 @@ func TestKnight(t *testing.T) {
 	evaluate(validMoves, expectedMoves, t)
 }
 
+func TestRook(t *testing.T) {
+	r := NewRook(location.Location{Row: 3, Col: 4}, WHITE)
+
+	pcs := []Piece{
+		NewPawn(location.Location{Row: 4, Col: 4}, BLACK),
+		NewPawn(location.Location{Row: 3, Col: 2}, WHITE),
+	}
+
+	validMoves := r.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 3, Col: 7},
+		{Row: 3, Col: 6},
+		{Row: 3, Col: 5},
+		{Row: 0, Col: 4},
+		{Row: 1, Col: 4},
+		{Row: 2, Col: 4},
+		{Row: 3, Col: 3},
+		{Row: 4, Col: 4},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
+
 func evaluate(moves []location.Location, expectedMoves []location.Location, t *testing.T) {
 	t.Helper()
 
