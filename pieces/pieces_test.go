@@ -204,6 +204,30 @@ func TestRook(t *testing.T) {
 	evaluate(validMoves, expectedMoves, t)
 }
 
+func TestBishop(t *testing.T) {
+	b := NewBishop(location.Location{Row: 3, Col: 4}, WHITE)
+
+	pcs := []Piece{
+		NewPawn(location.Location{Row: 5, Col: 6}, WHITE),
+		NewPawn(location.Location{Row: 5, Col: 2}, BLACK),
+	}
+
+	validMoves := b.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 0, Col: 1},
+		{Row: 1, Col: 2},
+		{Row: 2, Col: 3},
+		{Row: 0, Col: 7},
+		{Row: 1, Col: 6},
+		{Row: 2, Col: 5},
+		{Row: 4, Col: 3},
+		{Row: 5, Col: 2},
+		{Row: 4, Col: 5},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
 func evaluate(moves []location.Location, expectedMoves []location.Location, t *testing.T) {
 	t.Helper()
 
