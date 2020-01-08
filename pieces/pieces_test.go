@@ -261,6 +261,97 @@ func TestQueen(t *testing.T) {
 
 	evaluate(validMoves, expectedMoves, t)
 }
+
+func TestKing(t *testing.T) {
+	k := NewKing(location.Location{Row: 2, Col: 6}, WHITE)
+	k.Move(location.Location{Row: 2, Col: 7})
+
+	pcs := []Piece{
+		NewRook(location.Location{Row: 0, Col: 7}, BLACK),
+		NewBishop(location.Location{Row: 1, Col: 6}, BLACK),
+		NewPawn(location.Location{Row: 3, Col: 6}, WHITE),
+	}
+
+	validMoves := k.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 1, Col: 6},
+		{Row: 2, Col: 6},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
+
+func TestCastle(t *testing.T) {
+	k := NewKing(location.Location{Row: 7, Col: 4}, BLACK)
+
+	pcs := []Piece{
+		NewRook(location.Location{Row: 7, Col: 7}, BLACK),
+		NewRook(location.Location{Row: 7, Col: 0}, BLACK),
+		k,
+	}
+
+	validMoves := k.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 7, Col: 3},
+		{Row: 7, Col: 5},
+		{Row: 6, Col: 3},
+		{Row: 6, Col: 4},
+		{Row: 6, Col: 5},
+		{Row: 7, Col: 6},
+		{Row: 7, Col: 2},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
+
+func TestBlockedCastle(t *testing.T) {
+	k := NewKing(location.Location{Row: 0, Col: 4}, WHITE)
+
+	pcs := []Piece{
+		NewRook(location.Location{Row: 0, Col: 7}, WHITE),
+		NewRook(location.Location{Row: 0, Col: 0}, WHITE),
+		NewBishop(location.Location{Row: 0, Col: 5}, WHITE),
+		NewBishop(location.Location{Row: 0, Col: 2}, WHITE),
+		k,
+	}
+
+	validMoves := k.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 0, Col: 3},
+		{Row: 1, Col: 3},
+		{Row: 1, Col: 4},
+		{Row: 1, Col: 5},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
+
+func TestCastleThroughCheck(t *testing.T) {
+	k := NewKing(location.Location{Row: 0, Col: 4}, WHITE)
+
+	pcs := []Piece{
+		NewRook(location.Location{Row: 0, Col: 7}, WHITE),
+		NewRook(location.Location{Row: 0, Col: 0}, WHITE),
+		NewBishop(location.Location{Row: 3, Col: 3}, BLACK),
+		NewBishop(location.Location{Row: 3, Col: 4}, BLACK),
+		k,
+	}
+
+	validMoves := k.ValidMoves(pcs)
+
+	expectedMoves := []location.Location{
+		{Row: 0, Col: 3},
+		{Row: 1, Col: 3},
+		{Row: 1, Col: 4},
+		{Row: 0, Col: 5},
+	}
+
+	evaluate(validMoves, expectedMoves, t)
+}
+
 func evaluate(moves []location.Location, expectedMoves []location.Location, t *testing.T) {
 	t.Helper()
 
